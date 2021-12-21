@@ -1,0 +1,15 @@
+1638795701604	geckodriver	INFO	Listening on 127.0.0.1:43477
+1638795702098	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "--remote-debugging-port" "48477" "-no-remote" "-profile" "/tmp/rust_mozprofileWZt26M"
+ATTENTION: default value of option mesa_glthread overridden by environment.
+1638795704987	Marionette	INFO	Marionette enabled
+console.info: MINT: Trying to use the system region (based on LANG).
+console.info: MINT: System region is US
+console.info: MINT: Trying to use the system region (based on LANG).
+console.info: MINT: System region is US
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileWZt26M/search.json.mozlz4", (void 0)))
+console.info: MINT: Loading search-config defaults.
+JavaScript error: resource:///modules/BrowserGlue.jsm, line 4033: TypeError: invalid assignment to const 'dialogReason'
+DevTools listening on ws://localhost:48477/devtools/browser/8c703526-df09-4562-9b5c-0290da378675
+1638795707882	Marionette	INFO	Listening on port 34021
+1638795708026	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1638795713019	Marionette	INFO	Stopped listening on port 34021
