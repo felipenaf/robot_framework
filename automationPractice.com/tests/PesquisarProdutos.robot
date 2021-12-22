@@ -11,7 +11,12 @@ ${produto2}  produtonaoencontrado
 ${produto3}  t-shirt
 ${opcao_categoria}  Summer Dresses
 ${categoria}  Women
-${email}  teste@felipe.com
+${dominio_email}  @felipe.com
+&{pessoa}
+    ...  primeiro_nome=felipe  ultimo_nome=ferreira
+    ...  id_genero=1  passwd=bipao  endereco=Rua dos bobos, 0
+    ...  cidade=Camp  id_estado=5  postcode=11111
+    ...  numero_celular=970707070
 
 ***Test Cases***
 Teste01: Pesquisar produtos existentes
@@ -97,9 +102,9 @@ E quando clicar no botão "Proceed to checkout"
 Então a tela do carrinho de compras será exibida
     Wait Until Element Is Visible  id=page
     Wait Until Element Is Visible  id=center_column
-    Page Should Contain Element  id=cart_title
-    Page Should Contain Element  //li[@class="step_current\ \ first"]
-    Page Should Contain Element  id=cart_summary
+    Page Should Contain Element    id=cart_title
+    Page Should Contain Element    //li[@class="step_current\ \ first"]
+    Page Should Contain Element    id=cart_summary
 
 Quando eu clicar no ícone de carrinho de compras
     Click Link  //a[@title="View my shopping cart"]
@@ -109,18 +114,19 @@ E quando eu clicar no botão de remoção de produto
 
 Então a tela exibirá a mensagem "Your shopping cart is empty."
     Wait Until Element Is Visible  //p[@class="alert alert-warning"]
-    Page Should Contain Element  //p[@class="alert alert-warning" and text()="Your shopping cart is empty."]
+    Page Should Contain Element    //p[@class="alert alert-warning" and text()="Your shopping cart is empty."]
 
 Quando eu clicar no botão "Sign in"
     Wait Until Element Is Visible  id=page
-    Click Link  //a[@title="Log in to your customer account"]
+    Click Link                     //a[@title="Log in to your customer account"]
 
 Então exibirá a tela de autenticação
     Wait Until Element Is Visible  id=columns
-    Page Should Contain Element  //span[@class="navigation_page"]
+    Page Should Contain Element    //span[@class="navigation_page"]  30
 
 E Quando eu inserir um email válido no campo de criação de conta
-    Input Text  name=email_create  ${email}
+    ${aleatory_string}  Generate Random String  8  [LOWER]
+    Input Text          name=email_create  ${aleatory_string}${dominio_email}
 
 E clicar no botão "Create an account"
     Click Button  id=SubmitCreate
@@ -130,28 +136,21 @@ Então será exibida a tela de criação de conta
     Wait Until Element Is Visible  id=account-creation_form
 
 E quando eu preencher o formulário
-    Select Radio Button  id_gender  1
-    Input Text  name=customer_firstname  felipe
-    Input Text  name=customer_lastname  ferreira
-    Input Password  name=passwd  bipao
-    Select From List By Value  name=days  20
-    Select From List By Value  name=months  5
-    Select From List By Value  name=years  1990
-    Input Text  name=firstname  tati
-    Input Text  name=lastname  ferreira
-    Input Text  name=address1  Rua dos bobos, 0
-    Input Text  name=city  Camp
-    Select From List By Value  name=id_state  5
-    Input Text  name=postcode  15054
-    Input Text  name=phone_mobile  70707070
-    Input Text  name=phone_mobile  70707070
+    Select Radio Button         id_gender                ${pessoa.id_genero}
+    Input Text                  name=customer_firstname  ${pessoa.primeiro_nome}
+    Input Text                  name=customer_lastname   ${pessoa.ultimo_nome}
+    Input Password              name=passwd              ${pessoa.passwd}
+    Input Text                  name=firstname           ${pessoa.primeiro_nome}
+    Input Text                  name=lastname            ${pessoa.ultimo_nome}
+    Input Text                  name=address1            ${pessoa.endereco}
+    Input Text                  name=city                ${pessoa.cidade}
+    Select From List By Value   name=id_state            ${pessoa.id_estado}
+    Input Text                  name=postcode            ${pessoa.postcode}
+    Input Text                  name=phone_mobile        ${pessoa.numero_celular}
 
 E clicar em "Register"
     Click Button  name=submitAccount
 
 Então a tela de gerenciamento de conta deve ser exibida
     Wait Until Element Is Visible  id=center_column
-    Page Should Contain Element  //p[text()="Welcome to your account. Here you can manage all of your personal information and orders."]
-
-# Wait id page
-#     Wait Until Element Is Visible  id=page
+    Page Should Contain Element    //p[text()="Welcome to your account. Here you can manage all of your personal information and orders."]

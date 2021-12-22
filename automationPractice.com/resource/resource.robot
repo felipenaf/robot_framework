@@ -1,5 +1,6 @@
 ***Settings***
 Library         SeleniumLibrary
+Library         String
 
 ***Variables***
 ${base_url}  http://automationpractice.com/index.php
