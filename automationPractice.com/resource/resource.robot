@@ -82,9 +82,15 @@ Então exibirá a tela de autenticação
     Wait Until Element Is Visible  id=columns
     Page Should Contain Element    //span[@class="navigation_page"]  30
 
-E Quando eu inserir um email válido no campo de criação de conta
+email aleatorio
+    [Arguments]  ${nome}  ${sobrenome}
     ${aleatory_string}  Generate Random String  8  [LOWER]
-    Input Text          name=email_create  ${aleatory_string}${dominio_email}
+    ${email} =  Catenate  SEPARATOR=  ${nome}  ${sobrenome}  ${aleatory_string}  @felipe.com
+    [Return]  ${email}
+
+E Quando eu inserir um email válido no campo de criação de conta
+    ${email}  email aleatorio  filipe  alves
+    Input Text  name=email_create  ${email}
 
 E clicar no botão "Create an account"
     Click Button  id=SubmitCreate
