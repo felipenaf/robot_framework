@@ -13,7 +13,7 @@ ${URL_API}      https://fakerestapi.azurewebsites.net/api/v1
 ...             Description=Description aleatory
 ...             Excerpt=excerpt aleatory
 ...             PageCount=700
-...             PublishDate=2021-12-27
+...             PublishDate=2021-12-27T00:00:00
 
 *** Keywords ***
 ####SETUP E TEARDOWNS
@@ -61,4 +61,9 @@ Conferir se retorna todos os dados corretos do livro 15
     Should Not Be Empty    ${RESPOSTA.json()["publishDate"]}
 
 Conferir se retorna todos os dados cadastrados para o novo livro
-    # Implementar
+    Dictionary Should Contain Item  ${RESPOSTA.json()}  id           ${BOOK_201.ID}
+    Dictionary Should Contain Item  ${RESPOSTA.json()}  title        ${BOOK_201.Title}
+    Dictionary Should Contain Item  ${RESPOSTA.json()}  description  ${BOOK_201.Description}
+    Dictionary Should Contain Item  ${RESPOSTA.json()}  pageCount    ${BOOK_201.PageCount}
+    Dictionary Should Contain Item  ${RESPOSTA.json()}  excerpt      ${BOOK_201.Excerpt}
+    Dictionary Should Contain Item  ${RESPOSTA.json()}  publishDate  ${BOOK_201.PublishDate}
