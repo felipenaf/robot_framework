@@ -14,11 +14,17 @@ ${URL_API}      https://fakerestapi.azurewebsites.net/api/v1
 ...             Excerpt=excerpt aleatory
 ...             PageCount=700
 ...             PublishDate=2021-12-27T00:00:00
+&{BOOK_150}     ID=150
+...             Title=Book 150
+...             Description=Descricao alterada
+...             Excerpt=excerpt alterada
+...             PageCount=700
+...             PublishDate=2021-12-27T00:00:00
 
 *** Keywords ***
 ####SETUP E TEARDOWNS
 Conectar a minha API
-    Create Session    fakeAPI    ${URL_API}
+    Create Session    fakeAPI    ${URL_API}  verify=true
     ${HEADERS}     Create Dictionary    content-type=application/json
     Set Suite Variable    ${HEADERS}
 
@@ -67,3 +73,25 @@ Conferir se retorna todos os dados cadastrados para o novo livro
     Dictionary Should Contain Item  ${RESPOSTA.json()}  pageCount    ${BOOK_201.PageCount}
     Dictionary Should Contain Item  ${RESPOSTA.json()}  excerpt      ${BOOK_201.Excerpt}
     Dictionary Should Contain Item  ${RESPOSTA.json()}  publishDate  ${BOOK_201.PublishDate}
+
+Alterar os dados do livro ${id}
+    ${RESPOSTA}  PUT On Session  fakeAPI  Books/${id}
+    ...  data={"id": "${BOOK_150.ID}","title": "${BOOK_150.Title}","description": "${BOOK_150.Description}","pageCount": ${BOOK_150.PageCount},"excerpt": "${BOOK_150.Excerpt}","publishDate": "${BOOK_150.PublishDate}"}
+    ...  headers=${HEADERS}
+    Set Test Variable  ${RESPOSTA}
+
+Conferir se retorna todos os dados alterados do livro 150
+    Dictionary Should Contain Item  ${RESPOSTA.json()}  id           ${BOOK_150.ID}
+    Dictionary Should Contain Item  ${RESPOSTA.json()}  title        ${BOOK_150.Title}
+    Dictionary Should Contain Item  ${RESPOSTA.json()}  description  ${BOOK_150.Description}
+    Dictionary Should Contain Item  ${RESPOSTA.json()}  pageCount    ${BOOK_150.PageCount}
+    Dictionary Should Contain Item  ${RESPOSTA.json()}  excerpt      ${BOOK_150.Excerpt}
+    Dictionary Should Contain Item  ${RESPOSTA.json()}  publishDate  ${BOOK_150.PublishDate}
+
+Deletar o livro ${id}
+    ${RESPOSTA}  Delete On Session  fakeAPI  Books/${id}
+    Set Test Variable  ${RESPOSTA}
+
+Conferir se deleta o livro 200 (o response body deve ser vazio)
+    Should Be Equal As Integers  ${RESPOSTA.status_code}  200
+

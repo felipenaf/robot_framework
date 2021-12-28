@@ -20,7 +20,10 @@ Cadastrar um novo livro (POST)
     Cadastrar um novo livro
     Conferir se retorna todos os dados cadastrados para o novo livro
 
-#TO-DO: Alterar um livro (PUT)
-#   - Conferir se retorna todos os dados alterados do livro 150
-#TO-DO: Deletar um livro (DELETE)
-#   - Conferir se deleta o livro 200 (o response body deve ser vazio)
+Alterar um livro (PUT)
+    Alterar os dados do livro 150
+    Conferir se retorna todos os dados alterados do livro 150
+
+Deletar um livro (DELETE)
+    Deletar o livro 150
+    Conferir se deleta o livro 200 (o response body deve ser vazio)
