@@ -66,27 +66,20 @@ Conferir se retorna todos os dados corretos do livro 15
     Should Not Be Empty    ${RESPOSTA.json()["excerpt"]}
     Should Not Be Empty    ${RESPOSTA.json()["publishDate"]}
 
-Conferir se retorna todos os dados cadastrados para o novo livro
-    Dictionary Should Contain Item  ${RESPOSTA.json()}  id           ${BOOK_201.ID}
-    Dictionary Should Contain Item  ${RESPOSTA.json()}  title        ${BOOK_201.Title}
-    Dictionary Should Contain Item  ${RESPOSTA.json()}  description  ${BOOK_201.Description}
-    Dictionary Should Contain Item  ${RESPOSTA.json()}  pageCount    ${BOOK_201.PageCount}
-    Dictionary Should Contain Item  ${RESPOSTA.json()}  excerpt      ${BOOK_201.Excerpt}
-    Dictionary Should Contain Item  ${RESPOSTA.json()}  publishDate  ${BOOK_201.PublishDate}
+Conferir dados do livro
+    [Arguments]  ${id}  ${title}  ${description}  ${pageCount}  ${excerpt}  ${publishDate}
+    Dictionary Should Contain Item  ${RESPOSTA.json()}  id           ${id}
+    Dictionary Should Contain Item  ${RESPOSTA.json()}  title        ${title}
+    Dictionary Should Contain Item  ${RESPOSTA.json()}  description  ${description}
+    Dictionary Should Contain Item  ${RESPOSTA.json()}  pageCount    ${pageCount}
+    Dictionary Should Contain Item  ${RESPOSTA.json()}  excerpt      ${excerpt}
+    Dictionary Should Contain Item  ${RESPOSTA.json()}  publishDate  ${publishDate}
 
 Alterar os dados do livro ${id}
     ${RESPOSTA}  PUT On Session  fakeAPI  Books/${id}
     ...  data={"id": "${BOOK_150.ID}","title": "${BOOK_150.Title}","description": "${BOOK_150.Description}","pageCount": ${BOOK_150.PageCount},"excerpt": "${BOOK_150.Excerpt}","publishDate": "${BOOK_150.PublishDate}"}
     ...  headers=${HEADERS}
     Set Test Variable  ${RESPOSTA}
-
-Conferir se retorna todos os dados alterados do livro 150
-    Dictionary Should Contain Item  ${RESPOSTA.json()}  id           ${BOOK_150.ID}
-    Dictionary Should Contain Item  ${RESPOSTA.json()}  title        ${BOOK_150.Title}
-    Dictionary Should Contain Item  ${RESPOSTA.json()}  description  ${BOOK_150.Description}
-    Dictionary Should Contain Item  ${RESPOSTA.json()}  pageCount    ${BOOK_150.PageCount}
-    Dictionary Should Contain Item  ${RESPOSTA.json()}  excerpt      ${BOOK_150.Excerpt}
-    Dictionary Should Contain Item  ${RESPOSTA.json()}  publishDate  ${BOOK_150.PublishDate}
 
 Deletar o livro ${id}
     ${RESPOSTA}  Delete On Session  fakeAPI  Books/${id}
